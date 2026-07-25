@@ -1,5 +1,5 @@
 source .venv/bin/activate
 which python
 cd backend
-fastapi dev main.py
+fastapi dev main.py --reload
 deactivate
