@@ -21,7 +21,51 @@ AsCO2 aims to provide a practical first step toward carbon accounting, not a bla
 
 Use a .env file for local development:
 
-TO BE DEFINED LATER
+No required variables for the minimalist placeholder.
+
+## Local Setup
+
+Target Python version: 3.12
+
+```bash
+python3.12 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+```
+
+Run the API (dev mode):
+
+```bash
+fastapi dev
+```
+
+Run the API (production mode):
+
+```bash
+fastapi run
+```
+
+Run tests:
+
+```bash
+pytest
+```
+
+
+## Minimal Placeholder Structure
+
+```text
+.
+├── backend/
+│   └── main.py
+├── frontend/
+│   └── index.html
+├── tests/
+│   └── test_placeholder.py
+└── docs/
+	└── ARCHITECTURE.md
+```
 
 ## Copilot Agent Configuration
 

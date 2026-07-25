@@ -1,3 +1,5 @@
 perso
 
 .env
+
+__pycache__
