@@ -1,5 +1,6 @@
-perso
-
-.env
-
 __pycache__
+.vscode
+
+perso
+.env
+asco2.db

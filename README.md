@@ -34,6 +34,14 @@ python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
+Run the API with the helper script:
+
+```bash
+bash launchapi.sh
+```
+
+This script activates `.venv`, prints the Python interpreter path, starts the API from `backend/main.py` with `fastapi dev`, then deactivates the virtual environment when the server stops.
+
 Run the API (dev mode):
 
 ```bash
