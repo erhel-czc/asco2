@@ -6,7 +6,7 @@ from backend.routers.public import router as public_router
 from backend.routers.reports import router as reports_router
 from backend.routers.users import router as users_router
 
-app = FastAPI(title="AsCO2 API", version="26.7.25")
+app = FastAPI(title="AsCO2 API", version="26.7.26")
 
 init_db()
 
