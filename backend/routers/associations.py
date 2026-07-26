@@ -25,6 +25,13 @@ def create_association(
     session: Session = Depends(get_db),
 ):
     """Endpoint to create a new association."""
+    if association.initial_admin_id is not None:
+        db_user = session.get(User, association.initial_admin_id)
+
+        if db_user is None:
+            raise HTTPException(
+                status_code=404, detail="Initial admin user not found")
+
     db_association = Association(
         association_name=association.association_name,
         association_description=association.association_description,
@@ -35,12 +42,6 @@ def create_association(
     session.refresh(db_association)
 
     if association.initial_admin_id is not None:
-        db_user = session.get(User, association.initial_admin_id)
-
-        if db_user is None:
-            raise HTTPException(
-                status_code=404, detail="Initial admin user not found")
-
         membership = AssociationMembership(
             user_id=association.initial_admin_id,
             association_id=db_association.id,
