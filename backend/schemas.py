@@ -40,6 +40,14 @@ class AssociationMemberRead(SQLModel):
     is_admin: bool
 
 
+class AssociationRead(SQLModel):
+    """Public schema for association responses."""
+
+    id: int
+    association_name: str
+    association_description: str
+
+
 class ReportCreate(SQLModel):
     """Schema for creating a new report."""
 

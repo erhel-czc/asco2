@@ -7,19 +7,20 @@ from backend.schemas import (
     AssociationCreate,
     AssociationMemberCreate,
     AssociationMemberRead,
+    AssociationRead,
 )
 
 router = APIRouter(prefix="/associations", tags=["associations"])
 
 
-@router.get("")
+@router.get("", response_model=list[AssociationRead])
 def read_associations(session: Session = Depends(get_db)):
     """Endpoint to retrieve all associations."""
     associations = session.exec(select(Association)).all()
     return associations
 
 
-@router.post("")
+@router.post("", response_model=AssociationRead)
 def create_association(
     association: AssociationCreate,
     session: Session = Depends(get_db),
