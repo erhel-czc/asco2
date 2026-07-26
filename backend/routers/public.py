@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 from sqlmodel import Session, select
 
 from backend.db import get_db
-from backend.models import Food, Stuff, Transport
+from backend.models import Food, Stuff, Transport, Digital
 
 router = APIRouter()
 
@@ -32,3 +32,9 @@ def read_stuff(session: Session = Depends(get_db)):
     """Endpoint to retrieve all stuff entries."""
     stuff_entries = session.exec(select(Stuff)).all()
     return stuff_entries
+
+@router.get("/digital")
+def read_digital(session: Session = Depends(get_db)):
+    """Endpoint to retrieve all digital entries."""
+    digital_entries = session.exec(select(Digital)).all()
+    return digital_entries
