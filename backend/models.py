@@ -76,3 +76,13 @@ class Stuff(SQLModel, table=True):
     quantity: float
     emission_factor: float
     carbon_footprint: float
+
+class Digital(SQLModel, table=True):
+    """Digital table for storing digital-related carbon footprint information."""
+
+    id: int = Field(default=None, primary_key=True)
+    report_id: int = Field(foreign_key="report.id")
+    digital_type: str
+    amount: float
+    emission_factor: float
+    carbon_footprint: float
