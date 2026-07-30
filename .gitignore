@@ -4,3 +4,5 @@ __pycache__
 perso
 .env
 asco2.db
+
+test.py
