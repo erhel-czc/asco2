@@ -11,7 +11,11 @@
 - [ ] Structure carbon footprint calculations into pure, testable functions.
 - [ ] Add emissions factor metadata (source, unit, version, date) to models and responses.
 - [ ] Complete the backend architecture documentation.
+- [ ] Add a feature to simulate and propose reductions in carbon footprint based on user actions.
 - [ ] [OPTIONAL] Include water and soil pollution for food.
+- [ ] [OPTIONAL] Add scopes calculation
+- [ ] [OPTIONAL] Add a comparison feature to compare the carbon footprint of different actions.
+- [ ] [OPTIONAL] Manage transportation emissions with address and distance calculations.
 
 ## Frontend
 The UI should be simple and user-friendly, allowing users to easily navigate through the application and access the main features. The frontend should also provide a clear overview of the associations and users data retrieved from the backend. Dark theme will be the default theme.
