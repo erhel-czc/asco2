@@ -11,7 +11,7 @@ This project builds a carbon-footprint web application for associations in a Fre
 ## Technical Direction
 
 - Backend framework: FastAPI.
-- Frontend stack: vanilla HTML/CSS/JS.
+- Frontend stack: vanilla HTML/SCSS/JS.
 - Prefer explicit, typed Pydantic schemas for request/response models.
 - Keep external API access isolated in service clients.
 

@@ -1,0 +1,102 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+
+  label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba($color-white, 0.85);
+    letter-spacing: 0.04em;
+  }
+
+  input {
+    padding: 0.65rem 0.9rem;
+    border-radius: 0.65rem;
+    border: 1px solid rgba($color-primary, 0.45);
+    background: rgba($color-bg-dark-2, 0.6);
+    color: $color-text;
+    font-size: 0.95rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+    &::placeholder {
+      color: rgba($color-text, 0.35);
+    }
+
+    &:focus {
+      border-color: rgba($color-primary, 0.85);
+      box-shadow: 0 0 0 3px rgba($color-primary, 0.15);
+    }
+
+    &.error {
+      border-color: rgba(#e76f51, 0.8);
+    }
+  }
+}
+
+.field-hint {
+  font-size: 0.75rem;
+  color: rgba($color-white, 0.45);
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 0.75rem 1.1rem;
+  border-radius: 0.75rem;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: $color-bg-dark-2;
+  background: $color-accent;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.15s ease;
+  margin-top: 0.4rem;
+
+  &:hover {
+    background: lighten($color-accent, 10%);
+  }
+}
+
+.login-footer-text {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: rgba($color-white, 0.6);
+  text-align: center;
+
+  a {
+    color: $color-text;
+    text-decoration: underline dotted;
+
+    &:hover {
+      color: lighten($color-text, 10%);
+    }
+  }
+}
+
+.login-card {
+  max-width: 440px;
+  width: 100%;
+}
+
+.signup-card {
+  max-width: 500px;
+  width: 100%;
+}
+
+.hero-card h2 {
+  font-size: clamp(1.4rem, 4vw, 2rem);
+  color: $color-text;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.25rem;
+}

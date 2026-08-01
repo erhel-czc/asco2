@@ -61,19 +61,9 @@ pytest
 ```
 
 
-## Minimal Placeholder Structure
+## Architecture
 
-```text
-.
-├── backend/
-│   └── main.py
-├── frontend/
-│   └── index.html
-├── tests/
-│   └── test_placeholder.py
-└── docs/
-	└── ARCHITECTURE.md
-```
+See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for a detailed overview of the project structure and backend design.
 
 ## Copilot Agent Configuration
 
