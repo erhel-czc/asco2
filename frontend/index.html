@@ -3,14 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AsCO2</title>
+    <title>AsCO₂</title>
     <link rel="stylesheet" href="./style/style.css" />
   </head>
   <body>
-    <main class="card">
-      <h1>AsCO2</h1>
-      <p>Minimalist placeholder frontend.</p>
-      <p>API health endpoint: <code>/health</code></p>
+    <header class="navbar">
+      <a href="#" class="logo">AsCO<sub>2</sub></a>
+      <button class="burger" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <nav>
+        <a href="#">Accueil</a>
+        <a href="#">Calculateur</a>
+        <a href="#">Méthodologie</a>
+        <a href="#">Contact</a>
+        <a href="#" class="nav-login">Connexion</a>
+      </nav>
+    </header>
+
+    <main class="hero">
+      <section class="hero-card">
+        <h1>AsCO<sub>2</sub></h1>
+        <p class="eyebrow">Plateforme de chiffrement carbone pour associations</p>
+        <p class="subtitle">Estimez, comprenez et réduisez l'empreinte de votre association.</p>
+        <div class="hero-actions">
+          <a href="#" class="btn btn-primary">Mon compte</a>
+          <a href="#" class="btn btn-primary">Méthodologie</a>
+        </div>
+      </section>
     </main>
+
+    <footer class="footer">
+      <p>&copy; 2026 AsCO<sub>2</sub> - 
+        Made with ❤ by
+        <a href="https://github.com/erhel-czc/asco2" target="_blank">erhel-czc</a></p>
+    </footer>
+
+    <script src="./js/navbar.js" defer></script>
+    <script src="./js/main.js" defer></script>
   </body>
 </html>

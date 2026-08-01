@@ -1,0 +1,21 @@
+.footer {
+  padding: 1rem clamp(1rem, 3vw, 3rem);
+  text-align: center;
+  font-size: 0.9rem;
+  color: rgba($color-white, 0.85);
+  background: rgba($color-bg-dark-2, 0.65);
+  border-top: 1px solid rgba($color-primary, 0.35);
+
+  sub {
+    font-size: 0.65em;
+  }
+
+  a {
+    color: rgba($color-white, 0.85);
+    text-decoration: underline dotted;
+
+    &:hover {
+      color: $color-text;
+    }
+  }
+}

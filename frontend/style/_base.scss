@@ -1,0 +1,19 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: Inter, "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: $color-text;
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba($color-primary, 0.35) 0%, transparent 50%),
+    radial-gradient(circle at 95% 95%, rgba($color-accent, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 50% 100%, rgba($color-accent, 0.15) 0%, transparent 100%),
+    linear-gradient(135deg, $color-bg-dark-1 0%, $color-bg-base 45%, $color-bg-dark-2 100%);
+  overflow-x: hidden;
+}

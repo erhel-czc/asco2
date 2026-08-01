@@ -1,0 +1,108 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem clamp(1rem, 3vw, 3rem);
+  background: rgba($color-bg-dark-1, 0.65);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba($color-primary, 0.4);
+
+  a {
+    color: $color-text;
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      color: lighten($color-text, 10%);
+    }
+  }
+
+  .logo {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+
+    sub {
+      font-size: 0.5em;
+    }
+  }
+
+  nav {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    font-size: 0.95rem;
+  }
+
+  .nav-login {
+    padding: 0.45rem 0.9rem;
+    border-radius: 0.65rem;
+    border: 1px solid transparent;
+    color: $color-bg-dark-2;
+    background: $color-accent;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+
+    &:hover {
+      background: lighten($color-accent, 6%);
+      color: $color-bg-dark-2;
+    }
+  }
+}
+
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 1.5rem;
+  height: 1.1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+
+  span {
+    display: block;
+    height: 2px;
+    background: $color-text;
+    border-radius: 2px;
+    transition: opacity 0.2s;
+  }
+}
+
+@media (max-width: 700px) {
+  .burger {
+    display: flex;
+  }
+
+  .navbar nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    background: rgba($color-bg-dark-1, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba($color-primary, 0.4);
+    padding: 0.75rem clamp(1rem, 3vw, 3rem);
+
+    &.open {
+      display: flex;
+    }
+
+    a {
+      padding: 0.6rem 0;
+      width: 100%;
+    }
+
+    .nav-login {
+      margin-top: 0.5rem;
+    }
+  }
+}
