@@ -1,0 +1,81 @@
+.hero {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+.hero-card {
+  width: min(760px, 100%);
+  text-align: center;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border: 1px solid rgba($color-primary, 0.28);
+  border-radius: 1.25rem;
+  background: linear-gradient(160deg, rgba($color-bg-dark-1, 0.75), rgba($color-bg-base, 0.5));
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+
+  .eyebrow {
+    display: inline-block;
+    padding: 0.35rem 0.8rem;
+    margin-bottom: 1rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: $color-white;
+    background: rgba($color-primary, 0.35);
+    border: 1px solid rgba($color-primary, 0.5);
+  }
+
+  h1 {
+    font-size: clamp(2.6rem, 8vw, 5.8rem);
+    letter-spacing: 0.08em;
+    line-height: 1;
+    color: $color-text;
+    text-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    margin-bottom: 1rem;
+
+    sub {
+      font-size: 0.5em;
+    }
+  }
+
+  .subtitle {
+    max-width: 54ch;
+    margin: 0 auto;
+    color: rgba($color-white, 0.9);
+    line-height: 1.6;
+  }
+}
+
+.hero-actions {
+  margin-top: 1.8rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.9rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 170px;
+  padding: 0.75rem 1.1rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-primary {
+  color: $color-white;
+  background: transparent;
+  border: 1px solid rgba($color-primary, 0.7);
+
+  &:hover {
+    color: $color-text;
+    background: rgba($color-primary, 0.2);
+  }
+}
