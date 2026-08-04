@@ -4,6 +4,7 @@ from sqlmodel import Session, select
 from backend.db import get_db
 from backend.models import User
 from backend.schemas import UserCreate, UserRead
+from backend.security import hash_password
 
 router = APIRouter(prefix="/users", tags=["users"])
 
@@ -17,11 +18,11 @@ def read_users(session: Session = Depends(get_db)):
 
 @router.post("", response_model=UserRead)
 def create_user(user: UserCreate, session: Session = Depends(get_db)):
-    """Endpoint to create a new user."""
+    """Receive a plaintext password, hash it with bcrypt, then persist the user."""
     db_user = User(
         username=user.username,
         email=user.email,
-        hashed_password=user.hashed_password,
+        hashed_password=hash_password(user.password),
     )
 
     session.add(db_user)
