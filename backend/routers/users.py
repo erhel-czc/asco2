@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends
 from sqlmodel import Session, select
+from fastapi import HTTPException
 
 from backend.db import get_db
 from backend.models import User
@@ -19,6 +20,14 @@ def read_users(session: Session = Depends(get_db)):
 @router.post("", response_model=UserRead)
 def create_user(user: UserCreate, session: Session = Depends(get_db)):
     """Receive a plaintext password, hash it with bcrypt, then persist the user."""
+
+    user.email = user.email.lower()  # Normalize email to lowercase
+    
+    # Check if the email already exists
+    existing_user = session.exec(select(User).where(User.email == user.email)).first()
+    if existing_user:
+        raise HTTPException(status_code=400, detail="Email déjà utilisé.")
+
     db_user = User(
         username=user.username,
         email=user.email,
