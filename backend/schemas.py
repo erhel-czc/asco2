@@ -2,11 +2,12 @@ from sqlmodel import SQLModel
 
 
 class UserCreate(SQLModel):
-    """Schema for creating a new user."""
+    """Schema for creating a new user. Accepts the raw plaintext password;
+    hashing is performed server-side before persistence."""
 
     username: str
     email: str
-    hashed_password: str
+    password: str
 
 
 class UserRead(SQLModel):
