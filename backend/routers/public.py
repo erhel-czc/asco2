@@ -1,14 +1,62 @@
+import os
+from pathlib import Path
+
 from fastapi import APIRouter, Depends
+from fastapi import Request
+from fastapi.templating import Jinja2Templates
 from sqlmodel import Session, select
 
 from backend.db import get_db
 from backend.models import Food, Stuff, Transport, Digital
 
 router = APIRouter()
+templates = Jinja2Templates(
+    directory=str(Path(__file__).resolve().parents[2] / "frontend" / "templates")
+)
+# Template global used by base.html to enable/disable dev auto-refresh script.
+templates.env.globals["dev_auto_reload"] = os.getenv("ENV", "development") != "production"
 
 
 @router.get("/")
-def read_root():
+def read_home(request: Request):
+    """Render the homepage."""
+    return templates.TemplateResponse(
+        request, "index.html", {"active_page": "home", "page_title": "AsCO₂"}
+    )
+
+
+@router.get("/login")
+def read_login(request: Request):
+    """Render the login page."""
+    return templates.TemplateResponse(
+        request,
+        "login.html",
+        {"active_page": "login", "page_title": "Connexion - AsCO₂"},
+    )
+
+
+@router.get("/signup")
+def read_signup(request: Request):
+    """Render the signup page."""
+    return templates.TemplateResponse(
+        request,
+        "signup.html",
+        {"active_page": "signup", "page_title": "Créer un compte - AsCO₂"},
+    )
+
+
+@router.get("/methodologie")
+def read_methodologie(request: Request):
+    """Render the methodology page."""
+    return templates.TemplateResponse(
+        request,
+        "methodologie.html",
+        {"active_page": "methodologie", "page_title": "Méthodologie - AsCO₂"},
+    )
+
+
+@router.get("/api")
+def read_api_root():
     """Root endpoint to check if the API is running."""
     return {"message": "Welcome to the AsCO2 API!"}
 

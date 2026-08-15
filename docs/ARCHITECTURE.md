@@ -3,7 +3,7 @@
 ## Overview
 
 AsCO₂ is a carbon-footprint web application for French associations.  
-It follows a classic client/server split: a **FastAPI backend** exposes a REST API backed by SQLite, and a **vanilla HTML/CSS/JS frontend** consumes it.
+It follows a classic client/server split: a **FastAPI backend** exposes REST APIs, renders HTML templates, and serves static assets backed by SQLite.
 
 ---
 
@@ -24,8 +24,13 @@ asco2/
 │   │   └── agrybalise.py  # GET /agrybalise — Agribalyse CSV adapter
 │   └── data/
 │       └── agribalyse-31-synthese.csv  # Local ADEME/Agribalyse emission factors
-├── frontend/              # Vanilla HTML/CSS/JS
-│   ├── index.html         # Home page
+├── frontend/              # Vanilla template/static frontend
+│   ├── templates/
+│   │   ├── base.html      # Shared layout (navbar, footer, common assets)
+│   │   ├── index.html     # Home page template
+│   │   ├── login.html     # Login page template
+│   │   ├── signup.html    # Signup page template
+│   │   └── methodologie.html # Methodology page template
 │   ├── js/
 │   │   ├── navbar.js      # Burger menu toggle (shared across all pages)
 │   │   └── main.js        # Home page scripts
@@ -52,6 +57,7 @@ asco2/
 
 - **Framework:** FastAPI with SQLModel (SQLAlchemy + Pydantic).
 - **Database:** SQLite (`asco2.db`), managed via SQLModel sessions.
+- **Rendering:** Jinja2 templates via `backend/routers/public.py`; static files mounted at `/static` in `backend/main.py`.
 - **Data models:** `User`, `Association`, `AssociationMembership`, `Report`, `Food`, `Transport`, `Stuff`, `Digital`.
 - **Emission factors:** Agribalyse 3.1 CSV loaded locally in `backend/data/`. The `/agrybalise` router exposes search and lookup endpoints over it.
 - **API docs:** available at `/docs` (Swagger UI) when the server is running.
@@ -65,15 +71,15 @@ asco2/
 
 ## Frontend
 
-- **Stack:** vanilla HTML, SCSS (compiled to CSS), vanilla JS — no framework.
-- **Shared components:** navbar (with burger menu) and footer are duplicated across pages but share `_navbar.scss`, `_footer.scss`, and `js/navbar.js`.
-- **SCSS partials:** `_variables.scss`, `_base.scss`, `_navbar.scss`, and `_footer.scss` are shared. Each page gets its own partial (e.g., `_home.scss`) imported in `style.scss`.
+- **Stack:** Jinja2 templates + vanilla JS + SCSS (compiled to CSS) — no frontend framework.
+- **Shared components:** navbar, footer, and common assets are centralized in `frontend/templates/base.html`.
+- **SCSS partials:** `_variables.scss`, `_base.scss`, `_navbar.scss`, and `_footer.scss` are shared. Each page can keep its own partial (e.g., `_home.scss`) imported in `style.scss`.
 
 ### Adding a new page
-1. Create `frontend/<page>.html` — copy the navbar/footer markup from `index.html`.
-2. Create `frontend/style/_<page>.scss` for page-specific styles; add `@import "<page>"` in `style.scss`.
-3. Create `frontend/js/<page>.js` for page-specific scripts if needed.
-4. Include `<script src="./js/navbar.js" defer>` in every page.
+1. Create `frontend/templates/<page>.html` and extend `base.html`.
+2. Add a route in `backend/routers/public.py` returning `templates.TemplateResponse(...)`.
+3. Create `frontend/style/_<page>.scss` for page-specific styles; add `@import "<page>"` in `style.scss`.
+4. Create `frontend/js/<page>.js` for page-specific scripts if needed, then include it in the template `scripts` block.
 
 ---
 
@@ -83,4 +89,3 @@ asco2/
 - Units must be normalized before any calculation.
 - Side effects (I/O, API calls) are isolated from pure calculation functions.
 - API keys and secrets stay in environment variables (`.env`), never in source code.
-

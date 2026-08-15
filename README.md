@@ -48,6 +48,8 @@ Run the API (dev mode):
 fastapi dev
 ```
 
+In development mode, frontend files (`frontend/templates`, `frontend/style`, `frontend/js`) are now auto-refreshed in the browser when they change.
+
 Run the API (production mode):
 
 ```bash
