@@ -1,6 +1,7 @@
 from sqlmodel import Session, select
 
 from backend.models import Association, AssociationMembership, Report, User
+from backend.security import verify_password
 
 
 def test_root_endpoint(client):
@@ -30,7 +31,7 @@ def test_users_endpoints(client, engine):
         json={
             "username": "alice",
             "email": "alice@example.com",
-            "hashed_password": "hashed-secret",
+            "password": "secret-password",
         },
     )
 
@@ -47,7 +48,8 @@ def test_users_endpoints(client, engine):
     with Session(engine) as session:
         user = session.exec(select(User)).first()
         assert user is not None
-        assert user.hashed_password == "hashed-secret"
+        assert user.hashed_password != "secret-password"
+        assert verify_password("secret-password", user.hashed_password)
 
 
 def test_association_creation_and_initial_admin(client, engine):
@@ -56,7 +58,7 @@ def test_association_creation_and_initial_admin(client, engine):
         json={
             "username": "bob",
             "email": "bob@example.com",
-            "hashed_password": "hashed-password",
+            "password": "hashed-password",
         },
     )
 
@@ -91,7 +93,7 @@ def test_add_association_member(client):
         json={
             "username": "charlie",
             "email": "charlie@example.com",
-            "hashed_password": "hashed-password",
+            "password": "hashed-password",
         },
     )
     association_response = client.post(
@@ -146,7 +148,7 @@ def test_add_association_member_errors(client):
         json={
             "username": "dana",
             "email": "dana@example.com",
-            "hashed_password": "hashed-password",
+            "password": "hashed-password",
         },
     )
 

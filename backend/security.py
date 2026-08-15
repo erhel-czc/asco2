@@ -1,13 +1,13 @@
-from passlib.context import CryptContext
+from pwdlib import PasswordHash
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+password_hash = PasswordHash.recommended()
 
 
 def hash_password(plain: str) -> str:
-    """Return the bcrypt hash of a plaintext password."""
-    return pwd_context.hash(plain)
+    """Return a secure hash of a plaintext password."""
+    return password_hash.hash(plain)
 
 
 def verify_password(plain: str, hashed: str) -> bool:
-    """Return True if plain matches the stored bcrypt hash."""
-    return pwd_context.verify(plain, hashed)
+    """Return True if plain matches the stored password hash."""
+    return password_hash.verify(plain, hashed)

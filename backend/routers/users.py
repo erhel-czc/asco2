@@ -19,7 +19,7 @@ def read_users(session: Session = Depends(get_db)):
 
 @router.post("", response_model=UserRead)
 def create_user(user: UserCreate, session: Session = Depends(get_db)):
-    """Receive a plaintext password, hash it with bcrypt, then persist the user."""
+    """Receive a plaintext password, hash it securely, then persist the user."""
 
     user.email = user.email.lower()  # Normalize email to lowercase
     
