@@ -1,4 +1,4 @@
-let local_API_BASE = "http://localhost:8000";
+const local_API_BASE = window.location.origin;
 
 document.querySelector("form").addEventListener("submit", async function (event) {
     event.preventDefault();
