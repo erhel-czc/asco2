@@ -62,6 +62,19 @@ Run tests:
 pytest
 ```
 
+## Deployment (Render + Neon)
+
+This project ships with `render.yaml`, so the simplest path is:
+
+1. Create a Neon project and database.
+2. Copy Neon’s pooled connection string into Render as `DATABASE_URL`.
+3. Deploy the repository on Render using the `render.yaml` blueprint.
+4. Let Render run the build and start commands from `render.yaml`:
+   - `pip install -r requirements.txt`
+   - `uvicorn backend.main:app --host 0.0.0.0 --port $PORT`
+5. Keep `SECRET_KEY` and `ENV=production` in Render’s environment variables.
+
+For local development, keep using SQLite via the default `DATABASE_URL` fallback; only production needs the Neon connection string.
 
 ## Architecture
 
