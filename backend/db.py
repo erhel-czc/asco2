@@ -1,8 +1,11 @@
+import os
 from collections.abc import Generator
+from pathlib import Path
 
 from sqlmodel import Session, SQLModel, create_engine
 
-DATABASE_URL = "sqlite:///./asco2.db"
+_DEFAULT_DB_PATH = Path(__file__).resolve().parents[1] / "asco2.db"
+DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{_DEFAULT_DB_PATH}")
 engine = create_engine(DATABASE_URL, echo=True)
 
 
