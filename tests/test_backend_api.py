@@ -7,7 +7,21 @@ def test_root_endpoint(client):
     response = client.get("/")
 
     assert response.status_code == 200
+    assert "text/html" in response.headers["content-type"]
+
+
+def test_api_root_endpoint(client):
+    response = client.get("/api")
+
+    assert response.status_code == 200
     assert response.json() == {"message": "Welcome to the AsCO2 API!"}
+
+
+def test_template_routes(client):
+    for path in ("/", "/login", "/signup", "/methodologie"):
+        response = client.get(path)
+        assert response.status_code == 200
+        assert "text/html" in response.headers["content-type"]
 
 
 def test_users_endpoints(client, engine):
