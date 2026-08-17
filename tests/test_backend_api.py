@@ -1,6 +1,6 @@
 from sqlmodel import Session, select
 
-from backend.models import Association, AssociationMembership, Report, User
+from backend.models import Association, AssociationMembership, Report, User, UserSession
 from backend.security import verify_password
 
 
@@ -50,6 +50,46 @@ def test_users_endpoints(client, engine):
         assert user is not None
         assert user.hashed_password != "secret-password"
         assert verify_password("secret-password", user.hashed_password)
+
+
+def test_login_logout_and_current_user(client, engine):
+    user_response = client.post(
+        "/users",
+        json={
+            "username": "eve",
+            "email": "eve@example.com",
+            "password": "secret-password",
+        },
+    )
+
+    unauthenticated_me = client.get("/auth/me")
+    assert unauthenticated_me.status_code == 401
+
+    login_response = client.post(
+        "/auth/login",
+        json={"email": "eve@example.com", "password": "secret-password"},
+    )
+
+    assert login_response.status_code == 200
+    assert login_response.json()["email"] == "eve@example.com"
+    assert client.cookies.get("asco2_session")
+
+    me_response = client.get("/auth/me")
+    assert me_response.status_code == 200
+    assert me_response.json() == user_response.json()
+
+    with Session(engine) as session:
+        db_session = session.exec(select(UserSession)).first()
+        assert db_session is not None
+        assert db_session.user_id == user_response.json()["id"]
+
+    logout_response = client.post("/auth/logout")
+    assert logout_response.status_code == 200
+    assert logout_response.json() == {"message": "Logged out"}
+    assert client.cookies.get("asco2_session") is None
+
+    after_logout = client.get("/auth/me")
+    assert after_logout.status_code == 401
 
 
 def test_association_creation_and_initial_admin(client, engine):
