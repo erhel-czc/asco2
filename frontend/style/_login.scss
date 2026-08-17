@@ -84,17 +84,16 @@
   }
 }
 
-.login-card {
+.card--narrow {
   max-width: 440px;
-  width: 100%;
 }
 
-.signup-card {
+.card--form-wide {
   max-width: 500px;
-  width: 100%;
 }
 
-.hero-card h2 {
+.card--narrow h2,
+.card--form-wide h2 {
   font-size: clamp(1.4rem, 4vw, 2rem);
   color: $color-text;
   letter-spacing: 0.04em;

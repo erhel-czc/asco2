@@ -1,11 +1,11 @@
-.hero {
+.page {
   flex: 1;
   display: grid;
   place-items: center;
   padding: clamp(1.5rem, 4vw, 3rem);
 }
 
-.hero-card {
+.card {
   width: min(760px, 100%);
   text-align: center;
   padding: clamp(1.5rem, 4vw, 3rem);
@@ -49,7 +49,7 @@
   }
 }
 
-.hero-actions {
+.card-actions {
   margin-top: 1.8rem;
   display: flex;
   justify-content: center;
