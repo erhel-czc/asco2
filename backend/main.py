@@ -7,23 +7,27 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
 from backend.db import init_db
+from backend.routers.auth import router as auth_router
 from backend.routers.associations import router as associations_router
 from backend.routers.public import router as public_router
 from backend.routers.reports import router as reports_router
 from backend.routers.users import router as users_router
 from backend.routers.agrybalise import router as agrybalise_router
 
-app = FastAPI(title="AsCO2 API", version="26.8.15")
+app = FastAPI(title="AsCO2 API", version="26.8.17")
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 FRONTEND_DIR = ROOT_DIR / "frontend"
-# Frontend directories watched in development to detect template/style/script edits.
+BACKEND_DIR = ROOT_DIR / "backend"
+# Directories watched in development to detect template/style/script edits.
 DEV_WATCH_DIRS = (
     FRONTEND_DIR / "templates",
     FRONTEND_DIR / "style",
     FRONTEND_DIR / "js",
+    BACKEND_DIR ,
 )
-DEV_WATCH_EXTENSIONS = {".html", ".css", ".scss", ".js"}
+
+DEV_WATCH_EXTENSIONS = {".html", ".css", ".scss", ".js", ".py"}
 
 app.add_middleware(
     CORSMiddleware,
@@ -79,6 +83,7 @@ else:
         return {"revision": _frontend_revision()}
 
 app.include_router(public_router)
+app.include_router(auth_router)
 app.include_router(users_router)
 app.include_router(associations_router)
 app.include_router(reports_router)
