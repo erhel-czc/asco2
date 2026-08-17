@@ -21,10 +21,11 @@ def read_users(session: Session = Depends(get_db)):
 def create_user(user: UserCreate, session: Session = Depends(get_db)):
     """Receive a plaintext password, hash it securely, then persist the user."""
 
-    user.email = user.email.lower()  # Normalize email to lowercase
+    # Normalize the email so sign-in uses the exact same value later.
+    user.email = user.email.strip().lower()
     
-    # Check if the email already exists
     existing_user = session.exec(select(User).where(User.email == user.email)).first()
+
     if existing_user:
         raise HTTPException(status_code=400, detail="Email déjà utilisé.")
 
