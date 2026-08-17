@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from sqlmodel import Field, Relationship, SQLModel
 
 
@@ -20,6 +22,14 @@ class User(SQLModel, table=True):
         back_populates="users",
         link_model=AssociationMembership,
     )
+
+
+class UserSession(SQLModel, table=True):
+    """Server-side login session stored in the database."""
+
+    token: str = Field(primary_key=True)
+    user_id: int = Field(foreign_key="user.id")
+    expires_at: datetime
 
 
 class Association(SQLModel, table=True):
@@ -76,6 +86,7 @@ class Stuff(SQLModel, table=True):
     quantity: float
     emission_factor: float
     carbon_footprint: float
+
 
 class Digital(SQLModel, table=True):
     """Digital table for storing digital-related carbon footprint information."""
