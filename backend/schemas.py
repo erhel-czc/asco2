@@ -10,12 +10,26 @@ class UserCreate(SQLModel):
     password: str
 
 
+class UserLogin(SQLModel):
+    """Schema for logging in with an email and password."""
+
+    email: str
+    password: str
+
+
 class UserRead(SQLModel):
     """Public schema for user responses."""
 
     id: int
     username: str
     email: str
+
+
+class SessionRead(SQLModel):
+    """Public schema for a session response."""
+
+    token: str
+    user_id: int
 
 
 class AssociationCreate(SQLModel):
