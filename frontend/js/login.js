@@ -8,7 +8,7 @@ document.querySelector("form").addEventListener("submit", async function (event)
     const password = document.getElementById("password").value;
 
     submitBtn.disabled = true;
-    submitBtn.textContent = "Connexion en cours…";
+    submitBtn.textContent = "Connexion en cours...";
 
     try {
         const response = await fetch(`${local_API_BASE}/auth/login`, {

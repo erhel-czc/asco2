@@ -23,9 +23,12 @@ document.querySelector("form").addEventListener("submit", async function (event)
 
     const submitBtn = this.querySelector("button[type=submit]");
     submitBtn.disabled = true;
-    submitBtn.textContent = "Création en cours…";
+    submitBtn.textContent = "Création en cours...";
 
-    if (window.location.protocol !== "https:" && window.location.hostname !== "localhost") {
+    if (window.location.protocol !== "https:" &&
+        window.location.hostname !== "localhost" &&
+        window.location.hostname !== "127.0.0.1") {
+
         showError("Pas de connexion ou connexion non sécurisée.");
         submitBtn.disabled = false;
         submitBtn.textContent = "Créer mon compte";
