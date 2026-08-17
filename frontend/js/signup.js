@@ -46,7 +46,8 @@ document.querySelector("form").addEventListener("submit", async function (event)
         const requestSucceeded = response.ok;
 
         if (requestSucceeded) {
-            // DO SOMETHING ON SUCCESS
+            // Account creation is done, so send the user to the login screen.
+            window.location.href = "/login?created=1";
             return;
         }
 
