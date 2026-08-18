@@ -20,7 +20,7 @@ document.querySelector("form").addEventListener("submit", async function (event)
 
         if (response.ok) {
             // The cookie is now set by the server, so a simple redirect is enough.
-            window.location.href = "/";
+            window.location.href = "/dashboard";
             return;
         }
 
