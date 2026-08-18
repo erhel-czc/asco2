@@ -19,7 +19,7 @@ def test_api_root_endpoint(client):
 
 
 def test_template_routes(client):
-    for path in ("/", "/login", "/signup", "/methodologie"):
+    for path in ("/", "/login", "/signup", "/dashboard", "/methodologie"):
         response = client.get(path)
         assert response.status_code == 200
         assert "text/html" in response.headers["content-type"]
@@ -206,6 +206,47 @@ def test_add_association_member_errors(client):
     assert duplicate_add.json()["detail"] == (
         "User is already a member of this association"
     )
+
+
+def test_read_my_associations(client):
+    unauthorized = client.get("/associations/mine")
+    assert unauthorized.status_code == 401
+
+    user_response = client.post(
+        "/users",
+        json={
+            "username": "fiona",
+            "email": "fiona@example.com",
+            "password": "secret-password",
+        },
+    )
+
+    login_response = client.post(
+        "/auth/login",
+        json={"email": "fiona@example.com", "password": "secret-password"},
+    )
+    assert login_response.status_code == 200
+
+    association_response = client.post(
+        "/associations",
+        json={
+            "association_name": "Zero Waste Group",
+            "association_description": "Local reuse and repair network",
+            "initial_admin_id": user_response.json()["id"],
+        },
+    )
+    assert association_response.status_code == 200
+
+    mine_response = client.get("/associations/mine")
+    assert mine_response.status_code == 200
+    assert mine_response.json() == [
+        {
+            "id": association_response.json()["id"],
+            "association_name": "Zero Waste Group",
+            "association_description": "Local reuse and repair network",
+            "is_admin": True,
+        }
+    ]
 
 
 def test_reports_and_public_routes(client):
