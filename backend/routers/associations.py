@@ -3,11 +3,13 @@ from sqlmodel import Session, select
 
 from backend.db import get_db
 from backend.models import Association, AssociationMembership, User
+from backend.routers.auth import get_current_user
 from backend.schemas import (
     AssociationCreate,
     AssociationMemberCreate,
     AssociationMemberRead,
     AssociationRead,
+    UserAssociationRead,
 )
 
 router = APIRouter(prefix="/associations", tags=["associations"])
@@ -95,3 +97,26 @@ def add_association_member(
     session.commit()
     session.refresh(membership)
     return membership
+
+
+@router.get("/mine", response_model=list[UserAssociationRead])
+def read_my_associations(
+    current_user: User = Depends(get_current_user),
+    session: Session = Depends(get_db),
+):
+    """Endpoint to retrieve associations for the authenticated user."""
+    memberships = session.exec(
+        select(Association, AssociationMembership.is_admin)
+        .join(AssociationMembership)
+        .where(AssociationMembership.user_id == current_user.id)
+    ).all()
+
+    return [
+        UserAssociationRead(
+            id=association.id,
+            association_name=association.association_name,
+            association_description=association.association_description,
+            is_admin=is_admin,
+        )
+        for association, is_admin in memberships
+    ]
