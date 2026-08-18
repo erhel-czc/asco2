@@ -63,6 +63,15 @@ class AssociationRead(SQLModel):
     association_description: str
 
 
+class UserAssociationRead(SQLModel):
+    """Association item displayed in a user's dashboard."""
+
+    id: int
+    association_name: str
+    association_description: str
+    is_admin: bool
+
+
 class ReportCreate(SQLModel):
     """Schema for creating a new report."""
 

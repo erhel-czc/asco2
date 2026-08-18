@@ -44,6 +44,14 @@ def read_signup(request: Request):
         {"active_page": "signup", "page_title": "Créer un compte - AsCO₂"},
     )
 
+@router.get("/dashboard")
+def read_dashboard(request: Request):
+    """Render the dashboard page."""
+    return templates.TemplateResponse(
+        request,
+        "dashboard.html",
+        {"active_page": "dashboard", "page_title": "Tableau de bord - AsCO₂"},
+    )
 
 @router.get("/methodologie")
 def read_methodologie(request: Request):
