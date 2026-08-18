@@ -1,0 +1,102 @@
+.card--dashboard {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.dashboard-header__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  h2 {
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    color: $color-text;
+    letter-spacing: 0.04em;
+  }
+
+  .subtitle {
+    font-size: 0.9rem;
+    color: rgba($color-white, 0.7);
+    margin: 0;
+    max-width: none;
+  }
+}
+
+.associations-grid {
+  flex: 1;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-auto-rows: min(30%, 30vh);
+  align-content: start;
+  gap: 1rem;
+  padding-right: 0.25rem;
+
+  scrollbar-width: thin;
+  scrollbar-color: rgba($color-primary, 0.4) transparent;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba($color-primary, 0.4);
+    border-radius: 4px;
+  }
+}
+
+.association-tile {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid rgba($color-primary, 0.35);
+  border-radius: 0.75rem;
+  background: rgba($color-bg-dark-2, 0.5);
+  transition: border-color 0.2s ease, background 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+
+  &:hover {
+    border-color: rgba($color-primary, 0.7);
+    background: rgba($color-bg-dark-2, 0.75);
+  }
+
+  &__name {
+    font-size: 1rem;
+    font-weight: 600;
+    color: $color-text;
+  }
+
+  &__description {
+    font-size: 0.85rem;
+    color: rgba($color-white, 0.8);
+    line-height: 1.4;
+    flex: 1;
+  }
+
+  &__role {
+    font-size: 0.75rem;
+    color: rgba($color-white, 0.5);
+    margin-top: 0.25rem;
+  }
+}
+
+.dashboard-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: rgba($color-white, 0.5);
+  font-size: 0.9rem;
+  padding: 2rem 0;
+}
