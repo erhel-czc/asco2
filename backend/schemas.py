@@ -72,11 +72,11 @@ class UserAssociationRead(SQLModel):
     is_admin: bool
 
 
-class ReportCreate(SQLModel):
-    """Schema for creating a new report."""
+class AssociationReportRead(SQLModel):
+    """Report item displayed in an association reports page."""
 
-    association_id: int
+    id: int
     report_title: str
-    food_carbon_footprint: float
-    transport_carbon_footprint: float
-    stuff_carbon_footprint: float
+    food_carbon_footprint: float = 0.0
+    transport_carbon_footprint: float = 0.0
+    stuff_carbon_footprint: float = 0.0

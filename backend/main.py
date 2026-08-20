@@ -10,11 +10,10 @@ from backend.db import init_db
 from backend.routers.auth import router as auth_router
 from backend.routers.associations import router as associations_router
 from backend.routers.public import router as public_router
-from backend.routers.reports import router as reports_router
 from backend.routers.users import router as users_router
 from backend.routers.agrybalise import router as agrybalise_router
 
-app = FastAPI(title="AsCO2 API", version="26.8.18")
+app = FastAPI(title="AsCO2 API", version="26.8.20")
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
 FRONTEND_DIR = ROOT_DIR / "frontend"
@@ -86,5 +85,4 @@ app.include_router(public_router)
 app.include_router(auth_router)
 app.include_router(users_router)
 app.include_router(associations_router)
-app.include_router(reports_router)
 app.include_router(agrybalise_router)

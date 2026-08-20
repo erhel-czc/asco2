@@ -39,8 +39,9 @@ function renderAssociations(associations) {
     }
 
     associations.forEach((association) => {
-        const tile = document.createElement("div");
+        const tile = document.createElement("a");
         tile.className = "association-tile";
+        tile.href = `/association/${association.id}`;
 
         const role = association.is_admin ? "Admin" : "Membre";
         tile.innerHTML = `

@@ -19,7 +19,14 @@ def test_api_root_endpoint(client):
 
 
 def test_template_routes(client):
-    for path in ("/", "/login", "/signup", "/dashboard", "/methodologie"):
+    for path in (
+        "/",
+        "/login",
+        "/signup",
+        "/dashboard",
+        "/methodologie",
+        "/association/1",
+    ):
         response = client.get(path)
         assert response.status_code == 200
         assert "text/html" in response.headers["content-type"]
@@ -249,33 +256,99 @@ def test_read_my_associations(client):
     ]
 
 
-def test_reports_and_public_routes(client):
-    assert client.get("/food").json() == []
-    assert client.get("/transport").json() == []
-    assert client.get("/stuff").json() == []
+def test_read_association_reports(client):
+    user_response = client.post(
+        "/users",
+        json={
+            "username": "gabriel",
+            "email": "gabriel@example.com",
+            "password": "secret-password",
+        },
+    )
+
+    login_response = client.post(
+        "/auth/login",
+        json={"email": "gabriel@example.com", "password": "secret-password"},
+    )
+    assert login_response.status_code == 200
 
     association_response = client.post(
         "/associations",
         json={
-            "association_name": "Reports Club",
-            "association_description": "Tracks carbon reports",
+            "association_name": "Reports Group",
+            "association_description": "Tracks association reports",
+            "initial_admin_id": user_response.json()["id"],
         },
     )
+    assert association_response.status_code == 200
 
     report_response = client.post(
-        "/reports",
+        f"/associations/{association_response.json()['id']}/reports",
         json={
-            "association_id": association_response.json()["id"],
-            "report_title": "Annual report",
-            "food_carbon_footprint": 12.5,
-            "transport_carbon_footprint": 34.0,
-            "stuff_carbon_footprint": 7.25,
+            "id": 0,
+            "report_title": "Repair workshop",
+            "food_carbon_footprint": 2.5,
+            "transport_carbon_footprint": 6.0,
+            "stuff_carbon_footprint": 1.0,
+        },
+    )
+    assert report_response.status_code == 200
+
+    reports_response = client.get(f"/associations/{association_response.json()['id']}/reports")
+    assert reports_response.status_code == 200
+    assert reports_response.json() == [
+        {
+            "id": report_response.json()["id"],
+            "report_title": "Repair workshop",
+            "food_carbon_footprint": 2.5,
+            "transport_carbon_footprint": 6.0,
+            "stuff_carbon_footprint": 1.0,
+        }
+    ]
+
+
+def test_read_association_reports_forbidden(client):
+    owner_response = client.post(
+        "/users",
+        json={
+            "username": "helen",
+            "email": "helen@example.com",
+            "password": "secret-password",
         },
     )
 
-    assert report_response.status_code == 200
-    assert report_response.json()["report_title"] == "Annual report"
+    association_response = client.post(
+        "/associations",
+        json={
+            "association_name": "Members Only",
+            "association_description": "Private association data",
+            "initial_admin_id": owner_response.json()["id"],
+        },
+    )
+    assert association_response.status_code == 200
 
-    reports_response = client.get("/reports")
-    assert reports_response.status_code == 200
-    assert reports_response.json() == [report_response.json()]
+    outsider_response = client.post(
+        "/users",
+        json={
+            "username": "ian",
+            "email": "ian@example.com",
+            "password": "secret-password",
+        },
+    )
+    assert outsider_response.status_code == 200
+
+    login_response = client.post(
+        "/auth/login",
+        json={"email": "ian@example.com", "password": "secret-password"},
+    )
+    assert login_response.status_code == 200
+
+    reports_response = client.get(f"/associations/{association_response.json()['id']}/reports")
+    assert reports_response.status_code == 403
+    assert reports_response.json()["detail"] == "Forbidden"
+
+
+def test_public_routes(client):
+    assert client.get("/food").json() == []
+    assert client.get("/transport").json() == []
+    assert client.get("/stuff").json() == []
