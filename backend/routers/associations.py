@@ -144,6 +144,7 @@ def create_association_report(
     db_report = Report(
         association_id=association_id,
         report_title=report.report_title,
+        report_description=report.report_description,
         food_carbon_footprint=report.food_carbon_footprint,
         transport_carbon_footprint=report.transport_carbon_footprint,
         stuff_carbon_footprint=report.stuff_carbon_footprint,
@@ -181,6 +182,7 @@ def read_association_reports(
         AssociationReportRead(
             id=report.id,
             report_title=report.report_title,
+            report_description=report.report_description,
             food_carbon_footprint=report.food_carbon_footprint,
             transport_carbon_footprint=report.transport_carbon_footprint,
             stuff_carbon_footprint=report.stuff_carbon_footprint,

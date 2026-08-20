@@ -14,6 +14,22 @@
       <div id="association-reports-grid" class="associations-grid"></div>
     </section>
   </main>
+
+  <dialog class="modal" id="report-modal" aria-labelledby="report-modal-title">
+    <form class="modal__content" id="report-form" method="dialog">
+      <button class="modal__close" type="button" data-close-modal aria-label="Fermer">×</button>
+      <h2 id="report-modal-title">Ajouter un bilan</h2>
+      <p class="modal__error" id="report-form-error" role="alert"></p>
+      <label for="report-title">Nom du bilan</label>
+      <input id="report-title" name="report_title" required maxlength="40" />
+      <label for="report-description">Description (facultatif)</label>
+      <textarea id="report-description" name="report_description" maxlength="300" rows="4"></textarea>
+      <div class="modal__actions">
+        <button class="btn-cancel" type="button" data-close-modal>Annuler</button>
+        <button class="btn btn-primary" type="submit">Créer le bilan</button>
+      </div>
+    </form>
+  </dialog>
 {% endblock %}
 
 {% block scripts %}

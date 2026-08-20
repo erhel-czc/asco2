@@ -14,6 +14,23 @@
       <div id="associations-grid" class="associations-grid"></div>
     </section>
   </main>
+
+  <dialog class="modal" id="association-modal" aria-labelledby="association-modal-title">
+    <form class="modal__content" id="association-form" method="dialog">
+      <button class="modal__close" type="button" data-close-modal aria-label="Fermer">×</button>
+      <h2 id="association-modal-title">Ajouter une association</h2>
+      <p class="modal__description">Créez une association.</p>
+      <p class="modal__error" id="association-form-error" role="alert"></p>
+      <label for="association-name">Nom de l’association</label>
+      <input id="association-name" name="association_name" required maxlength="40" />
+      <label for="association-description">Description (facultatif)</label>
+      <textarea id="association-description" name="association_description" maxlength="300" rows="4"></textarea>
+      <div class="modal__actions">
+        <button class="btn-cancel" type="button" data-close-modal>Annuler</button>
+        <button class="btn btn-primary" type="submit">Créer l’association</button>
+      </div>
+    </form>
+  </dialog>
 {% endblock %}
 
 {% block scripts %}

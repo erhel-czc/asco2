@@ -237,6 +237,7 @@ body {
   border-radius: 0.75rem;
   font-weight: 600;
   text-decoration: none;
+  cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease, background-color 0.2s ease;
 }
 
@@ -471,4 +472,110 @@ body {
   color: rgba(255, 255, 255, 0.5);
   font-size: 0.9rem;
   padding: 2rem 0;
+}
+
+.modal {
+  width: min(92vw, 560px);
+  margin: auto;
+  padding: 0;
+  border: 1px solid rgba(42, 157, 143, 0.55);
+  border-radius: 1rem;
+  color: #e9c46a;
+  background: #1f3a45;
+  box-shadow: 0 1rem 4rem rgba(0, 0, 0, 0.45);
+}
+.modal::backdrop {
+  background: rgba(7, 21, 27, 0.75);
+  backdrop-filter: blur(3px);
+}
+.modal__content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 1.5rem;
+}
+.modal h2 {
+  margin-bottom: 0.15rem;
+  color: #e9c46a;
+}
+.modal__description {
+  margin-bottom: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+}
+.modal__close {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  border: 0;
+  color: rgba(255, 255, 255, 0.75);
+  background: transparent;
+  font-size: 1.75rem;
+  cursor: pointer;
+}
+.modal label {
+  margin-top: 0.35rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.85rem;
+}
+.modal input,
+.modal textarea {
+  width: 100%;
+  padding: 0.7rem 0.75rem;
+  border: 1px solid rgba(42, 157, 143, 0.4);
+  border-radius: 0.5rem;
+  color: #ffffff;
+  background: rgba(27, 47, 56, 0.8);
+  font: inherit;
+}
+.modal input:focus,
+.modal textarea:focus {
+  outline: 2px solid rgba(42, 157, 143, 0.7);
+  outline-offset: 1px;
+}
+.modal textarea {
+  resize: vertical;
+}
+.modal__fields {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+.modal__fields > div {
+  display: flex;
+  flex-direction: column;
+}
+@media (max-width: 600px) {
+  .modal__fields {
+    grid-template-columns: 1fr;
+  }
+}
+.modal__error {
+  margin: 0;
+  color: #e76f51;
+  font-size: 0.85rem;
+}
+.modal__error:empty {
+  display: none;
+}
+.modal__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.btn-cancel {
+  border: none;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.4rem 0.5rem;
+  cursor: pointer;
+  text-underline-offset: 2px;
+}
+.btn-cancel:hover {
+  color: #ffffff;
 }/*# sourceMappingURL=style.css.map */

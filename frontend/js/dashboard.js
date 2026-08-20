@@ -1,10 +1,57 @@
 const local_API_BASE = window.location.origin;
 const statusNode = document.getElementById("dashboard-status");
 const gridNode = document.getElementById("associations-grid");
+const associationModal = document.getElementById("association-modal");
+const associationForm = document.getElementById("association-form");
+const associationFormError = document.getElementById("association-form-error");
 
-document.getElementById("btn-add-association").addEventListener("click", () => {
-    // TODO: ouvrir modal ou naviguer vers formulaire d'ajout
-    alert("Fonctionnalité à venir : rejoindre ou créer une association.");
+document.getElementById("btn-add-association").addEventListener("click", (event) => {
+    event.preventDefault();
+    associationForm.reset();
+    associationFormError.textContent = "";
+    associationModal.showModal();
+});
+
+document.querySelectorAll("[data-close-modal]").forEach((button) => {
+    button.addEventListener("click", () => associationModal.close());
+});
+
+associationModal.addEventListener("click", (event) => {
+    if (event.target === associationModal) associationModal.close();
+});
+
+associationForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const submitButton = associationForm.querySelector("button[type=submit]");
+    submitButton.disabled = true;
+    associationFormError.textContent = "";
+
+    try {
+        const userResponse = await fetch(`${local_API_BASE}/auth/me`, { credentials: "same-origin" });
+        if (userResponse.status === 401) {
+            window.location.href = "/login";
+            return;
+        }
+        if (!userResponse.ok) throw new Error("failed_to_load_user");
+        const user = await userResponse.json();
+        const response = await fetch(`${local_API_BASE}/associations`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "same-origin",
+            body: JSON.stringify({
+                association_name: associationForm.elements.association_name.value.trim(),
+                association_description: associationForm.elements.association_description.value.trim(),
+                initial_admin_id: user.id,
+            }),
+        });
+        if (!response.ok) throw new Error("failed_to_create_association");
+        associationModal.close();
+        await loadAssociations();
+    } catch {
+        associationFormError.textContent = "Impossible de créer l’association pour le moment.";
+    } finally {
+        submitButton.disabled = false;
+    }
 });
 
 async function loadAssociations() {
