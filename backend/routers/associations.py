@@ -2,10 +2,11 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 
 from backend.db import get_db
-from backend.models import Association, AssociationMembership, User
+from backend.models import Association, AssociationMembership, Report, User
 from backend.routers.auth import get_current_user
 from backend.schemas import (
     AssociationCreate,
+    AssociationReportRead,
     AssociationMemberCreate,
     AssociationMemberRead,
     AssociationRead,
@@ -119,4 +120,70 @@ def read_my_associations(
             is_admin=is_admin,
         )
         for association, is_admin in memberships
+    ]
+
+
+@router.post("/{association_id}/reports", response_model=AssociationReportRead)
+def create_association_report(
+    association_id: int,
+    report: AssociationReportRead,
+    current_user: User = Depends(get_current_user),
+    session: Session = Depends(get_db),
+):
+    """Endpoint to create a new report for an association."""
+    membership = session.exec(
+        select(AssociationMembership).where(
+            AssociationMembership.association_id == association_id,
+            AssociationMembership.user_id == current_user.id,
+        )
+    ).first()
+
+    if membership is None:
+        raise HTTPException(status_code=403, detail="Forbidden")
+
+    db_report = Report(
+        association_id=association_id,
+        report_title=report.report_title,
+        food_carbon_footprint=report.food_carbon_footprint,
+        transport_carbon_footprint=report.transport_carbon_footprint,
+        stuff_carbon_footprint=report.stuff_carbon_footprint,
+    )
+
+    session.add(db_report)
+    session.commit()
+    session.refresh(db_report)
+
+    return db_report
+
+
+@router.get("/{association_id}/reports", response_model=list[AssociationReportRead])
+def read_association_reports(
+    association_id: int,
+    current_user: User = Depends(get_current_user),
+    session: Session = Depends(get_db),
+):
+    """Endpoint to retrieve reports (bilans) for one association membership."""
+    membership = session.exec(
+        select(AssociationMembership).where(
+            AssociationMembership.association_id == association_id,
+            AssociationMembership.user_id == current_user.id,
+        )
+    ).first()
+
+    if membership is None:
+        raise HTTPException(status_code=403, detail="Forbidden")
+
+    reports = session.exec(
+        select(Report).where(Report.association_id == association_id)
+    ).all()
+
+    return [
+        AssociationReportRead(
+            id=report.id,
+            report_title=report.report_title,
+            food_carbon_footprint=report.food_carbon_footprint,
+            transport_carbon_footprint=report.transport_carbon_footprint,
+            stuff_carbon_footprint=report.stuff_carbon_footprint,
+        )
+        for report in reports
     ]

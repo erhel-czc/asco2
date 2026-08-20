@@ -53,6 +53,21 @@ def read_dashboard(request: Request):
         {"active_page": "dashboard", "page_title": "Tableau de bord - AsCO₂"},
     )
 
+
+@router.get("/association/{association_id}")
+def read_association_reports_page(request: Request, association_id: int):
+    """Render the association reports page."""
+    return templates.TemplateResponse(
+        request,
+        "association_page.html",
+        {
+            "active_page": "dashboard",
+            "page_title": "Bilans de l'association - AsCO₂",
+            "association_id": association_id,
+        },
+    )
+
+
 @router.get("/methodologie")
 def read_methodologie(request: Request):
     """Render the methodology page."""

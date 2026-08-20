@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <main class="page">
+    <section class="card card--dashboard">
+      <div class="dashboard-header">
+        <div class="dashboard-header__text">
+          <h2 id="association-reports-title">Association : </h2>
+          <p class="subtitle" id="association-reports-subtitle">Retrouvez les bilans de cette association.</p>
+        </div>
+        <a href="" class="btn btn-primary" id="btn-add-report">+ Ajouter un bilan</a>
+      </div>
+      <p id="association-reports-status" class="login-footer-text" style="text-align:left; margin:0 0 0.5rem;">Chargement…</p>
+      <div id="association-reports-grid" class="associations-grid"></div>
+    </section>
+  </main>
+{% endblock %}
+
+{% block scripts %}
+  <script src="/static/js/association-page.js" defer></script>
+{% endblock %}

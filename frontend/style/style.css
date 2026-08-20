@@ -35,7 +35,7 @@ body {
   color: rgb(239.5614035088, 213.5964912281, 150.4385964912);
 }
 .navbar .logo {
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.02em;
   text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
@@ -55,10 +55,44 @@ body {
   border: 1px solid transparent;
   color: #1b2f38;
   background: #f4a261;
-  transition: transform 0.2s ease, background-color 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.15s ease;
 }
 .navbar .nav-login:hover {
-  background: rgb(245.9917159763, 178.8390532544, 125.6082840237);
+  background: rgb(247.3195266272, 190.0650887574, 144.6804733728);
+  color: #1b2f38;
+}
+.navbar .nav-user-group {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border-radius: 0.65rem;
+  border: none;
+  background: #f4a261;
+  overflow: hidden;
+}
+.navbar .nav-user-group .nav-login {
+  border-radius: 0;
+  border: none;
+  background: transparent;
+}
+.navbar .nav-user-group .nav-logout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-left: 1px solid rgba(27, 47, 56, 0.3);
+}
+.navbar .nav-user-group .nav-logout svg {
+  width: 1.25rem;
+  height: 1.25rem;
+  display: block;
+}
+.navbar .nav-user-group .nav-login,
+.navbar .nav-user-group .nav-logout {
+  color: #1b2f38;
+}
+.navbar .nav-user-group .nav-login:hover,
+.navbar .nav-user-group .nav-logout:hover {
+  background: rgb(247.3195266272, 190.0650887574, 144.6804733728);
   color: #1b2f38;
 }
 
@@ -106,8 +140,17 @@ body {
     padding: 0.6rem 0;
     width: 100%;
   }
-  .navbar nav .nav-login {
+  .navbar nav .nav-user-group {
+    width: -moz-fit-content;
+    width: fit-content;
+    max-width: 100%;
+    align-self: flex-start;
     margin-top: 0.5rem;
+    flex-wrap: nowrap;
+  }
+  .navbar nav .nav-user-group a {
+    width: auto;
+    white-space: nowrap;
   }
 }
 .footer {
