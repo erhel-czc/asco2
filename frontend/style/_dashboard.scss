@@ -100,3 +100,122 @@
   font-size: 0.9rem;
   padding: 2rem 0;
 }
+
+.modal {
+  width: min(92vw, 560px);
+  margin: auto;
+  padding: 0;
+  border: 1px solid rgba($color-primary, 0.55);
+  border-radius: 1rem;
+  color: $color-text;
+  background: $color-bg-dark-1;
+  box-shadow: 0 1rem 4rem rgba(#000, 0.45);
+
+  &::backdrop {
+    background: rgba(#07151b, 0.75);
+    backdrop-filter: blur(3px);
+  }
+
+  &__content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    padding: 1.5rem;
+  }
+
+  h2 {
+    margin-bottom: 0.15rem;
+    color: $color-text;
+  }
+
+  &__description {
+    margin-bottom: 0.75rem;
+    color: rgba($color-white, 0.7);
+    font-size: 0.9rem;
+  }
+
+  &__close {
+    position: absolute;
+    top: 0.75rem;
+    right: 1rem;
+    border: 0;
+    color: rgba($color-white, 0.75);
+    background: transparent;
+    font-size: 1.75rem;
+    cursor: pointer;
+  }
+
+  label {
+    margin-top: 0.35rem;
+    color: rgba($color-white, 0.85);
+    font-size: 0.85rem;
+  }
+
+  input,
+  textarea {
+    width: 100%;
+    padding: 0.7rem 0.75rem;
+    border: 1px solid rgba($color-primary, 0.4);
+    border-radius: 0.5rem;
+    color: $color-white;
+    background: rgba($color-bg-dark-2, 0.8);
+    font: inherit;
+
+    &:focus {
+      outline: 2px solid rgba($color-primary, 0.7);
+      outline-offset: 1px;
+    }
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  &__fields {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+
+    > div {
+      display: flex;
+      flex-direction: column;
+    }
+
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__error {
+    margin: 0;
+    color: $color-warm;
+    font-size: 0.85rem;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+}
+
+.btn-cancel {
+  border: none;
+  background: transparent;
+  color: rgba($color-white, 0.7);
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.4rem 0.5rem;
+  cursor: pointer;
+  text-underline-offset: 2px;
+
+  &:hover {
+    color: $color-white;
+  }
+}

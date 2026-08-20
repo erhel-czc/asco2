@@ -3,13 +3,62 @@ const statusNode = document.getElementById("association-reports-status");
 const gridNode = document.getElementById("association-reports-grid");
 const titleNode = document.getElementById("association-reports-title");
 const subtitleNode = document.getElementById("association-reports-subtitle");
+const reportModal = document.getElementById("report-modal");
+const reportForm = document.getElementById("report-form");
+const reportFormError = document.getElementById("report-form-error");
 const pathParts = window.location.pathname.split("/");
 const associationId = Number(pathParts[2]);
 
 document.getElementById("btn-add-report").addEventListener("click", (event) => {
     event.preventDefault();
-    // TODO: ouvrir modal ou naviguer vers formulaire d'ajout de bilan.
-    alert("Fonctionnalité à venir : ajouter un bilan d'association.");
+    reportForm.reset();
+    reportFormError.textContent = "";
+    reportModal.showModal();
+});
+
+document.querySelectorAll("[data-close-modal]").forEach((button) => {
+    button.addEventListener("click", () => reportModal.close());
+});
+
+reportModal.addEventListener("click", (event) => {
+    if (event.target === reportModal) reportModal.close();
+});
+
+reportForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const submitButton = reportForm.querySelector("button[type=submit]");
+    submitButton.disabled = true;
+    reportFormError.textContent = "";
+
+    try {
+        const response = await fetch(`${local_API_BASE}/associations/${associationId}/reports`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            credentials: "same-origin",
+            body: JSON.stringify({
+                id: 0,
+                report_title: reportForm.elements.report_title.value.trim(),
+                report_description: reportForm.elements.report_description.value.trim(),
+                food_carbon_footprint: 0,
+                transport_carbon_footprint: 0,
+                stuff_carbon_footprint: 0,
+            }),
+        });
+        if (response.status === 401) {
+            window.location.href = "/login";
+            return;
+        }
+        if (response.status === 403) throw new Error("forbidden");
+        if (!response.ok) throw new Error("failed_to_create_report");
+        reportModal.close();
+        await loadAssociationReportsPage();
+    } catch (error) {
+        reportFormError.textContent = error.message === "forbidden"
+            ? "Vous n’avez pas accès à cette association."
+            : "Impossible de créer le bilan pour le moment.";
+    } finally {
+        submitButton.disabled = false;
+    }
 });
 
 async function fetchMyAssociations() {
@@ -77,7 +126,7 @@ function renderReports(reports) {
 
         tile.innerHTML = `
             <span class="association-tile__name">${reportItem.report_title}</span>
-            <span class="association-tile__description">Bilan #${reportItem.id}</span>
+            <span class="association-tile__description">${reportItem.report_description}</span>
             <span class="association-tile__role">Empreinte estimée : ${total} kgCO₂e</span>
         `;
 
