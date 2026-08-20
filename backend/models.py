@@ -50,6 +50,7 @@ class Report(SQLModel, table=True):
     id: int = Field(default=None, primary_key=True)
     association_id: int = Field(foreign_key="association.id")
     report_title: str
+    report_description: str
     food_carbon_footprint: float
     transport_carbon_footprint: float
     stuff_carbon_footprint: float

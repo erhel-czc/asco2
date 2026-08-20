@@ -1,4 +1,4 @@
-from sqlmodel import SQLModel
+from sqlmodel import Field, SQLModel
 
 
 class UserCreate(SQLModel):
@@ -77,6 +77,7 @@ class AssociationReportRead(SQLModel):
 
     id: int
     report_title: str
-    food_carbon_footprint: float = 0.0
-    transport_carbon_footprint: float = 0.0
-    stuff_carbon_footprint: float = 0.0
+    report_description: str
+    food_carbon_footprint: float
+    transport_carbon_footprint: float
+    stuff_carbon_footprint: float
