@@ -287,6 +287,7 @@ def test_read_association_reports(client):
         json={
             "id": 0,
             "report_title": "Repair workshop",
+            "report_description": "Annual repair workshop footprint",
             "food_carbon_footprint": 2.5,
             "transport_carbon_footprint": 6.0,
             "stuff_carbon_footprint": 1.0,
@@ -300,6 +301,7 @@ def test_read_association_reports(client):
         {
             "id": report_response.json()["id"],
             "report_title": "Repair workshop",
+            "report_description": "Annual repair workshop footprint",
             "food_carbon_footprint": 2.5,
             "transport_carbon_footprint": 6.0,
             "stuff_carbon_footprint": 1.0,
