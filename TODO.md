@@ -1,5 +1,7 @@
 # TODO
 
+- [ ] Change license
+
 ## Backend
 - [x] Implement basic endpoints for associations and users.
 - [ ] Implement auto update version number.
